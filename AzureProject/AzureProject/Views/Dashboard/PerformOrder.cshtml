@@ -1,0 +1,88 @@
+﻿@model AzureProject.Models.Orders
+
+@{
+    ViewData["Title"] = "Performing Order";
+}
+<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    }
+    </style>
+</head>
+<body>
+<h1>Processing the Order</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PerformOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserID" class="control-label">User ID</label>
+                <input asp-for="UserID" class="form-control" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label">Product ID</label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label">Product ID</label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Price</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="status" class="control-label">Status</label>
+                <input asp-for="status" class="form-control" />
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="CartIndex" class="btn btn-primary">Back to Cart</a>
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["AddMsg"] !=null)
+        {
+            if(TempData["AddMsg"] == "1")
+            {
+                <script>
+                swal("Good job!", "Product added Successfully!", "success");
+                </script>
+            }
+            
+        }
+    }
+    catch
+    {
+        
+    }
+}

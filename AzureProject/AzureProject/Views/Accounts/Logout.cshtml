@@ -1,0 +1,58 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+<head>
+    <style>
+    body 
+    {
+    background-image: url('https://images.unsplash.com/photo-1635346236957-1d34fd8c81a4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHRoYW5rJTIweW91fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60') ;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-size:100% 100vh;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="color:white;">Logged Out Successfully</h1>
+
+    <div class="container mb-5">
+    <a href="~/Accounts/Login" class="btn btn-success" style="position:fixed; top:22%; left:10%">LOGIN</a>
+    </div>
+    <div>
+         @*<img src="https://i.pinimg.com/originals/14/74/8a/14748aff4122c454a2e20ea97a04203d.gif" style="position: relative; top:0%; left:55%" width="600" height="350">
+*@
+    </div>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["msg"] !=null)
+        {
+            if(TempData["msg"] != "1")
+            {
+    <script>
+        
+                            swal("Good job!", "Logged Out Successfully", "success");
+    </script>
+            }
+            else
+            {
+    <script>
+                        swal("Error Found!","Failed to Logout", "error");
+    </script>
+            }
+        }
+    }
+    catch
+    {
+        
+    }
+}
+
+
+

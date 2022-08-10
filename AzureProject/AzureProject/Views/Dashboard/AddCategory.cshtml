@@ -1,0 +1,50 @@
+﻿@model AzureProject.Models.Categories
+
+@{
+    ViewData["Title"] = "AddCategory";
+}
+<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    font-display:block;
+    font-palette:dark; 
+    }
+    </style>
+</head>
+<body>
+<h1>Add New Category</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCategory">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <input asp-for="CategoryId" class="form-control" />
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br />
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Categories" class="btn btn-primary">Back to Category List</a>
+</div>
+</body>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,57 @@
+﻿@model AzureProject.Models.Orders
+
+@{
+    ViewData["Title"] = "UpdateOrder";
+}
+<head>
+    <style>
+    body {
+    background-image: url('https://media.istockphoto.com/vectors/spring-background-with-gradient-and-soft-green-sunny-leaf-vector-id1208592742?k=20&m=1208592742&s=612x612&w=0&h=05uoEQpRzfjtFeV_7rCvbGRUMFQQUYRBCfYB2hZ9zRc=');
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+    </style>
+</head>
+
+<body>
+<h1>Update Order Status</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="status" class="control-label"></label>
+                <input asp-for="status" class="form-control" />
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="OrderIndex" class="btn btn-primary">Back to Orders List</a>
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

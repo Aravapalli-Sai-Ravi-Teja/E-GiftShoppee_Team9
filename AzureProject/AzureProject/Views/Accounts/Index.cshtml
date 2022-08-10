@@ -1,0 +1,100 @@
+﻿<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    }
+    </style>
+</head>
+<body>
+    <h1>Manage User's Data</h1>
+    <br />
+<div class="container mb-5">
+    <a href="~/Accounts/AddUser" class="btn text-white btn-success"><b>Add Admin</b></a>
+</div>
+
+<div class="container">
+    <table class="table table-bordered  border-success table-hover">
+        <tr class="bg-success  text-white">
+            <th>UserID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th align="center">EmailID</th>
+            <th>UserName</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th >Actions Available</th>
+        </tr>
+        @{
+            try
+            {
+                if(TempData["UserMasters"]!=null)
+                {
+                    foreach(var x in (List<AzureProject.Models.UserMaster>)TempData["UserMasters"])
+                    {
+                        <tr class="table-info">
+                        <td>@x.UserID</td>
+                        <td>@x.FirstName</td>
+                        <td>@x.LastName</td>
+                        <td>@x.DOB</td>
+                        <td>@x.Gender</td>
+                        <td>@x.Contact</td>
+                        <td>@x.EmailID</td>
+                        <td>@x.UserName</td>
+                        <td>@x.Password</td>
+                        <td>@x.Role</td>
+                        
+                        
+                        <td>
+                         <a href="~/Accounts/Edit?id=@x.UserID" class="btn btn-outline-success">Edit</a>
+
+                         <a href="~/Accounts/Delete?id=@x.UserID" class="btn btn-outline-danger" style="margin-left:3%">Delete</a>
+                        </td>
+                        </tr>
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+    </table>
+
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["DeleteMsg"] !=null)
+        {
+            if(TempData["DeleteMsg"] != "1")
+            {
+                <script>
+                swal("Good job!", "User Access Removed Successfully!", "success");
+                </script>
+            }
+            else
+            {
+                <script>
+                swal("Error Found!", "Unable to delete the User!", "error");
+                </script>
+            }
+        }
+    }
+    catch
+    {
+        
+    }
+}
+

@@ -1,0 +1,146 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    font-display:block;
+    font-palette:dark; 
+    }
+    </style>
+</head>
+<body>
+    <h1>Manage Products</h1>
+    <br />
+    @{
+        var role1=HttpContextAccessor.HttpContext.Session.GetInt32("role"); 
+        if(role1==1)
+        {
+            <div class="container mb-5">
+                 <a href="~/Dashboard/AddProducts" class=" btn bg-success text-white btn-outline-success ">Add Product</a>
+            </div>
+            
+        }
+    }
+
+<form method="get"  asp-action="Index_Products">
+       <p>
+           <input type="search" placeholder="Enter text" value="@ViewData["Getproductdtails"]" name="Productsearch" style="500px" />
+           <input type="submit" value="Search" class="btn btn-info" />
+           <a asp-action="Index_Products" class="btn btn-light">Get All Products</a>
+       </p>
+   </form>
+<div class="container">
+    <table class="table table-bordered table-hover">
+        <tr class="bg-success text-white">
+            <th>ProductId</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        @*@{
+            try
+            {
+                if(TempData["Products"]!=null)
+                {
+                    foreach(var x in (List<AzureProject.Models.Products>)TempData["Products"])
+                    {
+                                        <tr class=" table-light">
+                                        <td>@x.ProductId</td>
+                                        <td>@x.Name</td>
+                                        <td>@x.Category</td>
+                                        <td>@x.Price</td>
+                                        <td>
+                                         <a href="~/Dashboard/Edit?id=@x.ProductId" class="btn btn-outline-success">Edit</a>
+
+                                         <a href="~/Dashboard/Delete?id=@x.ProductId" class="btn btn-outline-danger" style="margin-left:3%">Delete</a>
+                                        </td>
+                                        </tr>
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+*@
+@foreach (var obj in Model) {
+        <tr class="table-light">
+            <td align="center">
+                @obj.ProductId
+            </td>
+            <td align="center">
+                @obj.Name
+            </td>
+             <td align="center">
+                @obj.Category
+            </td>
+             
+             <td align="center">
+                @obj.Price
+            </td>
+            
+           
+          
+                
+                <td align="center">
+                        @{
+                            var role=HttpContextAccessor.HttpContext.Session.GetInt32("role");
+                            if(role==1)
+                            {   <div>
+                                     <a href="~/Dashboard/Edit?id=@obj.ProductId" class="btn text-black btn-outline-warning">Edit</a>
+
+                                     <a href="~/Dashboard/Delete?id=@obj.ProductId" class="btn text-black btn-outline-danger">Delete</a>
+                        
+                                </div>
+                            }
+                            else if(role==2)
+                            {
+                                <div>
+                                     <a href="~/Dashboard/AddToCart?id=@obj.ProductId" class="btn text-black btn-warning">Add To Cart</a>
+                                </div>
+                            }
+                        }
+                    
+                     </td>
+            
+        </tr>
+}
+</table>
+
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["DeleteMsg"] !=null)
+        {
+            if(TempData["DeleteMsg"] != "1")
+            {
+    <script>
+                                    swal("Good job!", "Product deleted Successfully!", "success");
+    </script>
+            }
+            else
+            {
+    <script>
+                                    swal("Error Found!", "Unable to delete Product!", "error");
+    </script>
+            }
+        }
+    }
+    catch
+    {
+        
+    }
+}
+

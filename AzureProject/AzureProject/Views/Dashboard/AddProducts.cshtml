@@ -1,0 +1,111 @@
+﻿@model AzureProject.Models.Products
+
+@{
+    ViewData["Title"] = "AddProducts";
+}
+<head>
+    <style>
+    body {
+    background-image: url('https://media.istockphoto.com/vectors/spring-background-with-gradient-and-soft-green-sunny-leaf-vector-id1208592742?k=20&m=1208592742&s=612x612&w=0&h=05uoEQpRzfjtFeV_7rCvbGRUMFQQUYRBCfYB2hZ9zRc=');
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+    </style>
+</head>
+<body>
+<h1>AddProducts</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddProducts">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                @*<input asp-for="Category" class="form-control" />*@
+                <select name="Category" id="Category">
+                    <option value="">Select</option>
+                        @{
+                            try
+                            {
+                                if(TempData["Categories"]!=null)
+                                {
+                                    foreach(var x in (List<AzureProject.Models.Categories>)TempData["Categories"])
+                                    {
+                                        <option value="@x.Category">@x.Category</option>
+                                    }
+
+                                }
+                            }
+                            catch
+                            {
+                                
+                            }
+
+                    }
+                </select>
+             
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index_Products" class="btn btn-primary">Back to Products List</a>
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["AddMsg"] !=null)
+        {
+            if(TempData["AddMsg"] == "1")
+            {
+                <script>
+                swal("Good job!", "Product added Successfully!", "success");
+                </script>
+            }
+            //else
+            //{
+            //    <script>
+            //    swal("Error Found!", "Unable to Add Product!", "error");
+            //    </script>
+            //}
+        }
+    }
+    catch
+    {
+        
+    }
+}

@@ -1,0 +1,90 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    }
+    </style>
+</head>
+<body>
+    <h1>Cart View</h1>
+<br />
+<div class="container">
+    <table class="table table-bordered table-hover">
+        <tr class="bg-success text-white">
+            <th>CartId</th>
+            <th>UserID</th>
+            <th>ProductId</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+            @{
+                try
+                {
+                    if(TempData["Carts"]!=null)
+                    {
+                        var user= HttpContextAccessor.HttpContext.Session.GetInt32("userid");
+
+                        foreach(var x in (List<AzureProject.Models.Cart>)TempData["Carts"])
+                        {
+                            if(@x.UserID==user)
+                            {
+                                <tr class="table-light">
+                                <td>@x.CartId</td>
+                                <td>@x.UserID</td>
+                                <td>@x.ProductId</td>
+                                <td>@x.ProductName</td>
+                                <td>@x.Price</td>
+                                <td>
+                                 <a href="~/Dashboard/DeleteFromCart?id=@x.CartId" class="btn text-black btn-outline-danger">Delete</a>
+                                 <a href="~/Dashboard/PerformOrder?id=@x.CartId" class="btn text-black btn-outline-success">Order</a>
+                                </td>
+                                </tr>
+                            }
+                        
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+    </table>
+
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["DeleteMsg"] !=null)
+        {
+            if(TempData["DeleteMsg"] != "1")
+            {
+                <script>
+                swal("Good job!", "Product deleted from cart Successfully!", "success");
+                </script>
+            }
+            else
+            {
+                <script>
+                swal("Error Found!", "Unable to delete Product from cart!", "error");
+                </script>
+            }
+        }
+    }
+    catch
+    {
+        
+    }
+}
+

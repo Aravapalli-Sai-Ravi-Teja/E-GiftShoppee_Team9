@@ -1,0 +1,129 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<head>
+    <style>
+    body {
+    background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWFiARHxMYKCggGBolGx8TITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDysZFRk3NystLTctKysrKy0rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAM0A9gMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAFhABAQEAAAAAAAAAAAAAAAAAAAER/8QAGAEBAQEBAQAAAAAAAAAAAAAAAQACBQT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AO4A9riACQAkAJACQChIKIIKJIKJIKJIASAJACQAkAJACQAkAJAKEiioIYoEAqSCiCCiSCiSCiKYmKJIKFMiiSAEgCQAkAoSKKgiihIKAAKqkFAkUEgBARRFBRJBQ1IiiSChLIokyKFIASqgyBQABRIBQEFAgFSQUAQUSQUSQUJRFFUgokiKEoihSI0hKI0hSqDIFAAUAgUAAVJBQJFBIAQAEUFEkFEkRQpBUJQVCkFQlBQoUVkAKEiigIoBAoAAJAoggoEgokgqEoKJIKhSCoigoUyKhKChKgoACgAKAAoSKAAKCpBcVVIKKhEaFSyKKpBUKQVEkFCURQlEVCkFCVBQAFAAUABQgUZACpIKBIKJIKJIKJIihTIoSiKFIihKIqEooFCgEoKAAoAoMgUAgUAMFEkFwSQXBJMRpEkFQlBUKRGkJRFQpBUJQUJFRYAKACqkVkCgEKKAAoCKKEhiiSCokgoUiKEsioSiNIUiKhKCo0UBSgFCFRYzoUFZApFAAUAFAgFAQUCQUSRFCkRQlEqo0URSkpUVKcSJVRogBJFSLABqIsGgUgyliosAUFZACgAKyAFSRFEkRQlEqo0UFQpKi1CUSqVosgNFAoSLEWAKqRWdCwhCBKoMhYqRQBQZCqigAsGQiKUpKi1CUAaKJVqVopUVCUKUrRRAaKUKEv/Z');
+    background-repeat: no-repeat;
+    background-size:cover;
+    font-size:large;
+    font-display:block;
+    font-palette:dark; 
+    }
+    </style>
+</head>
+<body>
+    <h1>Categories Available</h1>
+    <br />
+@{
+    var role= HttpContextAccessor.HttpContext.Session.GetInt32("role");
+if(role==1)
+{
+    <div class="container mb-5">
+    <a href="~/Dashboard/AddCategory" class=" btn bg-success text-white btn-outline-success ">Add New Category</a>
+    </div>
+}
+
+}
+                            
+<div class="container">
+    <table class="table table-bordered table-hover border-success">
+        <tr class="bg-success text-light">
+            <th>CategoryId</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        @{
+            try
+            {
+                if(TempData["Categories"]!=null)
+                {
+                    foreach(var x in (List<AzureProject.Models.Categories>)TempData["Categories"])
+                    {
+                                        <tr class="table-light">
+                                        <td>@x.CategoryId</td>
+                                        <td>@x.Category</td>
+                                        
+                                         
+                                         @{
+                                        var role1= HttpContextAccessor.HttpContext.Session.GetInt32("role");
+                                        if(role1==1)
+                                        {
+                                            <td>
+                                         <a href="~/Dashboard/Explore?c=@x.Category" class="btn btn-outline-success">Explore</a>
+                                       
+                                            <a href="~/Dashboard/DeleteCategory?id=@x.CategoryId" class=" btn  btn-outline-success ">Delete</a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                         <td>
+                                         <a href="~/Dashboard/Explore?c=@x.Category" class="btn btn-outline-success">Explore</a>
+                                         </td>
+                                        
+                                    }
+
+                                        }
+                                            
+                                        </tr>
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+    </table>
+
+</div>
+<br />
+    @{
+        var role2= HttpContextAccessor.HttpContext.Session.GetInt32("role");
+        if(role2==1)
+        {
+            <div>
+                <a href="~/Dashboard/Index_Products" class="btn btn-success">List of Products</a>
+    
+            </div>
+
+        }
+        else
+        {
+            <div>
+                <a href="~/Dashboard/UserIndex" class="btn btn-success">List of Products</a>
+    
+            </div>
+            
+        }
+
+
+}
+<div>
+                                       
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["DeleteMsg"] !=null)
+        {
+            if(TempData["DeleteMsg"] != "1")
+            {
+                        <script>
+                                swal("Good job!", "Category deleted Successfully!", "success");
+                     </script>
+            }
+            
+        }
+    }
+    catch
+    {
+        
+    }
+}
+

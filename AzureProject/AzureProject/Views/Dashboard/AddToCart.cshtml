@@ -1,0 +1,84 @@
+﻿@model AzureProject.Models.Cart
+
+@{
+    ViewData["Title"] = "AddToCart";
+}
+<head>
+    <style>
+    body {
+    background-image: url('https://media.istockphoto.com/vectors/spring-background-with-gradient-and-soft-green-sunny-leaf-vector-id1208592742?k=20&m=1208592742&s=612x612&w=0&h=05uoEQpRzfjtFeV_7rCvbGRUMFQQUYRBCfYB2hZ9zRc=');
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+    </style>
+</head>
+<body>
+<h1>AddToCart</h1>
+
+<h4>Cart</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddToCart">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="CartId" class="control-label"></label>
+                <input asp-for="CartId" class="form-control" />
+                <span asp-validation-for="CartId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserID" class="control-label">User ID</label>
+                <input asp-for="UserID" class="form-control" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label">Product ID</label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label">Product Name</label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Price</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="UserIndex" class="btn btn-primary">Back to Cart</a>
+</div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    try
+    {
+        if(TempData["AddMsg"] !=null)
+        {
+            if(TempData["AddMsg"] != "1")
+            {
+                //<script>
+                //swal("Good job!", "Product added Successfully!", "success");
+                //</script>
+            }
+            
+        }
+    }
+    catch
+    {
+        
+    }
+}

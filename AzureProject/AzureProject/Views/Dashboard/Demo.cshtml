@@ -1,0 +1,74 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model List<Products>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <style>
+    body {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEK4_OTYbZz0Dey10GVST5_EMIRooStYzJhA&usqp=CAU');
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+    </style>
+</head>
+<body>
+@{
+    var role1=HttpContextAccessor.HttpContext.Session.GetInt32("role");
+    if (role1 == 1)
+    {
+
+        <div class="container mb-5">
+            <a href="~/Dashboard/AddProducts" class=" btn bg-success text-white btn-outline-success ">Add Product</a>
+        </div>
+    }
+}
+
+<br/>
+<form method="get"  asp-action="Demo">
+       <p>
+           <input type="search" placeholder="Enter text" value="@ViewData["Getproductdetails"]" name="Productsearch" style="500px" />
+           <input type="submit" value="Search" class="btn btn-info" />
+           <a asp-action="Demo" class="btn btn-light">Get All Products</a>
+       </p>
+</form>
+<br/>
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">
+                        <label style="font-size: 23px;color: black">@product.Name <br>(@product.Category)</label>
+                    </h4>
+                </div>
+                <img src="@product.Image" alt="Card Image" class="card-img-top" style="height: 250px;"/>
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <label style="font-size: 20px;  color: black"><b>Price : @product.Price</b></label>
+                        </div>
+                        @{
+                            var role= HttpContextAccessor.HttpContext.Session.GetInt32("role");
+                            if(role==1)
+                            {
+                                       <a href="~/Dashboard/Edit?id=@product.ProductId" class="btn btn-outline-success">Edit</a>
+                                       <a href="~/Dashboard/Delete?id=@product.ProductId" class="btn btn-outline-danger" style="margin-left:3%">Delete</a>
+                                      
+                            }
+                            else if(role==2)
+                            {
+                                        <a href="~/Dashboard/AddToCart?id=@product.ProductId" class="btn btn-hower btn-warning">Add To Cart</a>
+
+                            }
+                        }
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+</body>

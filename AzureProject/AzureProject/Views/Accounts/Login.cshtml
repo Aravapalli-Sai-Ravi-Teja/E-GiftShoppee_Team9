@@ -1,0 +1,67 @@
+﻿@model AzureProject.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<head>
+    <style>
+    body {
+    background-image: url('https://media.istockphoto.com/vectors/spring-background-with-gradient-and-soft-green-sunny-leaf-vector-id1208592742?k=20&m=1208592742&s=612x612&w=0&h=05uoEQpRzfjtFeV_7rCvbGRUMFQQUYRBCfYB2hZ9zRc=');
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+</style>
+</head>
+
+<body>
+<h1>Login</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="LOGIN" class="btn btn-primary" />
+            </div>
+            <br />
+            <div>
+                <p><a asp-action="ForgetPassword2" asp-controller="Accounts" class="btn btn-primary">Forget Password?</a></p>
+            </div>
+            <br />
+            <div>
+                <a href="~/Accounts/AddUser" class="btn btn-primary" >Register Here </a>
+            </div>
+        </form>
+    </div>
+        
+    <div  class="column right">
+        <a href="https://imgbb.com/"><img src="https://i.ibb.co/1RC30gr/logo.png" alt="logo" border="0" style="position: fixed; top:25%; left:55%" width="500" height="300"></a>
+    </div>
+</div>
+</body>
+@{
+    try
+    {
+    <label>@TempData["msg"]</label>
+    
+    }
+    catch
+    {
+    
+    }
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
